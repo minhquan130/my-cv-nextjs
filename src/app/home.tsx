@@ -1,9 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import avatar from '../../public/images/ảnh.jpg';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -18,44 +16,16 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-50 to-blue-100 px-6 py-10 flex flex-col items-center text-gray-800 font-sans space-y-6">
       
-      {/* Avatar */}
-      <motion.div
-        className="relative group"
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={0}
-      >
-        <Image
-          src={avatar}
-          alt="avatar"
-          className="w-40 h-40 rounded-full object-cover shadow-xl transition group-hover:scale-105 group-hover:shadow-2xl"
-        />
-        <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-sm text-center py-1 opacity-0 group-hover:opacity-100 transition-opacity rounded-b-full">
-          Nguyễn Ngọc Quỳnh Như
-        </div>
-      </motion.div>
-
-      {/* Tên & ngành */}
+      {/* Tên chính */}
       <motion.h1
         className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent drop-shadow-lg"
         initial="hidden"
         animate="visible"
         variants={fadeInUp}
-        custom={1}
+        custom={0}
       >
-        Nguyễn Ngọc Quỳnh Như
+       
       </motion.h1>
-
-      <motion.h2
-        className="text-lg text-blue-700 italic"
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={2}
-      >
-        Chuyên ngành: Kiểm thử phần mềm (QA)
-      </motion.h2>
 
       {/* SECTION TEMPLATE */}
       {[
@@ -99,8 +69,8 @@ export default function Home() {
           title: '🏆 Thành tựu / Chứng chỉ',
           color: 'text-yellow-600',
           content: [
-            '• Chứng chỉ ISTQB Foundation Level',
-            '• Tham gia khóa học Automation Testing with Selenium',
+            '• Chứng chỉ QA tại FPT',
+            '• Tham gia khóa học Automation Testing ',
           ],
         },
         {
@@ -118,7 +88,7 @@ export default function Home() {
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
-          custom={idx + 3}
+          custom={idx + 1}
         >
           <h3 className={`text-2xl font-semibold mb-3 ${section.color}`}>{section.title}</h3>
           <ul className="text-left list-disc list-inside space-y-1 text-gray-700">
