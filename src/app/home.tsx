@@ -33,21 +33,20 @@ export default function Home() {
       ></motion.header>
 
       {/* Navbar */}
-      <nav className="flex justify-center space-x-6 mb-8">
+      <nav className="flex justify-center gap-4 flex-wrap mt-4 mb-10">
         {[
-          { label: 'Mục tiêu', href: '#muctieu' },
-          { label: 'Học vấn', href: '#hocvan' },
-          { label: 'Kỹ năng', href: '#kynang' },
-          { label: 'Dự án', href: '#duan' },
-          { label: 'Thành tựu', href: '#thanhtuu' },
-          { label: 'Hoạt động', href: '#hoatdong' },
-          { label: 'Liên hệ', href: '#lienhe' },
+          { label: '🎓 Học vấn', href: '#hocvan', color: 'hover:text-blue-600' },
+          { label: '💡 Kỹ năng', href: '#kynang', color: 'hover:text-green-600' },
+          { label: '📁 Dự án', href: '#duan', color: 'hover:text-purple-600' },
+          { label: '🏆 Thành tựu', href: '#thanhtuu', color: 'hover:text-yellow-600' },
+          { label: '📚 Hoạt động', href: '#hoatdong', color: 'hover:text-indigo-600' },
+          { label: '📬 Liên hệ', href: '#lienhe', color: 'hover:text-red-500' },
         ].map((item, idx) => (
           <motion.a
             key={idx}
             href={item.href}
             whileHover={{ scale: 1.1 }}
-            className="text-lg font-medium text-gray-700 dark:text-white hover:text-pink-500 transition"
+            className={`px-4 py-2 rounded-full bg-white dark:bg-gray-700 shadow-md transition-all duration-300 ${item.color} hover:font-bold`}
           >
             {item.label}
           </motion.a>
@@ -117,7 +116,7 @@ export default function Home() {
           },
         ].map((section, idx) => (
           <motion.section
-            key={section.id}
+            key={idx}
             id={section.id}
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all hover:scale-[1.02] px-8 py-6 text-center"
             initial="hidden"
@@ -134,41 +133,6 @@ export default function Home() {
           </motion.section>
         ))}
       </div>
-
-      {/* Liên hệ */}
-      <motion.section
-        id="lienhe"
-        className="mt-16 max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={8}
-      >
-        <h3 className="text-2xl font-bold mb-6 text-pink-500 text-center">📩 Liên hệ với mình</h3>
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Tên của bạn"
-            className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
-          <input
-            type="email"
-            placeholder="Email của bạn"
-            className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
-          <textarea
-            placeholder="Nội dung..."
-            rows={4}
-            className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
-          <button
-            type="submit"
-            className="bg-pink-500 text-white px-6 py-2 rounded-md hover:bg-pink-600 transition"
-          >
-            Gửi liên hệ
-          </button>
-        </form>
-      </motion.section>
 
       {/* Socials */}
       <motion.div
@@ -199,6 +163,41 @@ export default function Home() {
           <FaEnvelope />
         </a>
       </motion.div>
+
+      {/* Liên hệ */}
+      <motion.section
+        id="lienhe"
+        className="max-w-xl mx-auto mt-16 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+        custom={11}
+      >
+        <h2 className="text-2xl font-semibold text-center text-pink-500 mb-4">📬 Liên hệ</h2>
+        <form className="flex flex-col gap-4">
+          <input
+            type="text"
+            placeholder="Họ và tên"
+            className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
+          />
+          <textarea
+            placeholder="Nội dung"
+            rows={5}
+            className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
+          />
+          <button
+            type="submit"
+            className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full transition font-semibold"
+          >
+            Gửi liên hệ
+          </button>
+        </form>
+      </motion.section>
     </main>
   );
 }

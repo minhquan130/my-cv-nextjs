@@ -33,9 +33,9 @@ export default function Header() {
       <div className="absolute inset-0 bg-white/30 backdrop-blur-sm z-0 rounded-b-3xl" />
 
       <div className="relative z-10">
-        {/* Avatar */}
+        {/* Avatar có hiệu ứng chuyển động */}
         <motion.div className="flex justify-center mb-6" variants={fadeUp} custom={1}>
-          <div className="relative w-36 h-36 rounded-full border-4 border-white shadow-xl ring-4 ring-white/50 overflow-hidden">
+          <div className="relative w-36 h-36 rounded-full border-4 border-white shadow-xl ring-4 ring-white/50 overflow-hidden animate-floatAvatar">
             <Image src={avatar} alt="Avatar" layout="fill" objectFit="cover" />
           </div>
         </motion.div>
