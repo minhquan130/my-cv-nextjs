@@ -1,12 +1,18 @@
-export default function Home() {
+import Image from 'next/image';
+import avatar from '../../public/images/ảnh.jpg'
+
+
+export default function Home() 
+{
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-100 to-blue-100 p-6 flex flex-col items-center text-gray-800 font-sans">
       
       {/* Avatar */}
       <div className="relative group mb-6">
-        <img
-          src="/avatar.jpg"
-          alt=""
+        <Image
+          src={avatar}
+          alt="avatar"
+          width={80}
           className="w-40 h-40 rounded-full object-cover shadow-lg transition duration-300 group-hover:scale-105 group-hover:shadow-2xl"
         />
         <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-sm text-center py-1 opacity-0 group-hover:opacity-100 transition-opacity">
