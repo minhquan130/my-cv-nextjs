@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import Link from 'next/link';
+import { useState } from 'react';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -14,9 +14,38 @@ const fadeInUp = {
 };
 
 export default function Home() {
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('idle');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch('https://formspree.io/f/moqgrdza', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formData,
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        form.reset();
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-100 via-blue-100 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-white font-sans relative overflow-hidden px-4 py-10">
-      {/* Background động blob */}
+      {/* Background blob động */}
       <div className="absolute -z-10 w-full h-full">
         <div className="absolute w-[40rem] h-[40rem] bg-pink-300 opacity-30 rounded-full blur-3xl animate-blob -top-20 -left-20" />
         <div className="absolute w-[30rem] h-[30rem] bg-blue-300 opacity-30 rounded-full blur-3xl animate-blob animation-delay-2000 top-40 -right-10" />
@@ -174,20 +203,39 @@ export default function Home() {
         custom={11}
       >
         <h2 className="text-2xl font-semibold text-center text-pink-500 mb-4">📬 Liên hệ</h2>
-        <form className="flex flex-col gap-4">
+
+        {/* Thông báo */}
+        {status === 'success' && (
+          <p className="text-green-600 font-medium text-center mb-4">
+            ✅ Gửi thành công! Mình sẽ phản hồi sớm nhất.
+          </p>
+        )}
+        {status === 'error' && (
+          <p className="text-red-500 font-medium text-center mb-4">
+            ❌ Đã có lỗi xảy ra, vui lòng thử lại.
+          </p>
+        )}
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
+            name="name"
             placeholder="Họ và tên"
+            required
             className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
           />
           <input
             type="email"
+            name="email"
             placeholder="Email"
+            required
             className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
           />
           <textarea
+            name="message"
             placeholder="Nội dung"
             rows={5}
+            required
             className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
           />
           <button
@@ -201,16 +249,3 @@ export default function Home() {
     </main>
   );
 }
-
-/* CSS bổ sung cần thêm vào globals.css hoặc tương đương:
-@keyframes blob {
-  0%, 100% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-}
-.animate-blob {
-  animation: blob 8s infinite ease-in-out;
-}
-.animation-delay-2000 { animation-delay: 2s; }
-.animation-delay-4000 { animation-delay: 4s; }
-*/
