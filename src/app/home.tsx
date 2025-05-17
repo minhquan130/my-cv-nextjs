@@ -1,251 +1,191 @@
-'use client';
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa";
+import clsx from "clsx";
+import Image from "next/image";
+import avatar from "../../public/images/avatar.jpg";
 
-import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import { useState } from 'react';
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.2, duration: 0.6, ease: 'easeOut' },
-  }),
-};
 
-export default function Home() {
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+export default function HomePage() {
+  const [darkMode, setDarkMode] = useState(true);
+  const toggleTheme = () => setDarkMode(!darkMode);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus('idle');
+  const skills = [
+    { name: "HTML", color: "border-red-500" },
+    { name: "CSS", color: "border-blue-400" },
+    { name: "JavaScript", color: "border-yellow-400" },
+    { name: "Node.js", color: "border-green-500" },
+    { name: "React", color: "border-cyan-400" },
+  ];
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+  const timeline = [
+    { year: "2021 - 2023", color: "bg-pink-500", position: "right" },
+    { year: "2023 - 2024", color: "bg-blue-500", position: "left" },
+  ];
 
-    try {
-      const res = await fetch('https://formspree.io/f/moqgrdza', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: formData,
-      });
-
-      if (res.ok) {
-        setStatus('success');
-        form.reset();
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      setStatus('error');
-    }
-  };
+  const projects = [
+    {
+      name: "CV cá nhân",
+      tech: "Next.js, Tailwind, Framer Motion",
+      description: "Một trang web giới thiệu bản thân với animation và dark mode.",
+      link: "https://github.com/yourusername/cv-project",
+    },
+    {
+      name: "Trang quản lý bug",
+      tech: "React, Node.js",
+      description: "Hệ thống quản lý bug đơn giản cho team QA",
+      link: "https://github.com/yourusername/bug-tracker",
+    },
+  ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-100 via-blue-100 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-white font-sans relative overflow-hidden px-4 py-10">
-      {/* Background blob động */}
-      <div className="absolute -z-10 w-full h-full">
-        <div className="absolute w-[40rem] h-[40rem] bg-pink-300 opacity-30 rounded-full blur-3xl animate-blob -top-20 -left-20" />
-        <div className="absolute w-[30rem] h-[30rem] bg-blue-300 opacity-30 rounded-full blur-3xl animate-blob animation-delay-2000 top-40 -right-10" />
-        <div className="absolute w-[35rem] h-[35rem] bg-purple-300 opacity-30 rounded-full blur-3xl animate-blob animation-delay-4000 top-96 left-20" />
-      </div>
-
-      {/* Header */}
-      <motion.header
-        className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto gap-6 mb-12"
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={0}
-      ></motion.header>
-
-      {/* Navbar */}
-      <nav className="flex justify-center gap-4 flex-wrap mt-4 mb-10">
-        {[
-          { label: '🎓 Học vấn', href: '#hocvan', color: 'hover:text-blue-600' },
-          { label: '💡 Kỹ năng', href: '#kynang', color: 'hover:text-green-600' },
-          { label: '📁 Dự án', href: '#duan', color: 'hover:text-purple-600' },
-          { label: '🏆 Thành tựu', href: '#thanhtuu', color: 'hover:text-yellow-600' },
-          { label: '📚 Hoạt động', href: '#hoatdong', color: 'hover:text-indigo-600' },
-          { label: '📬 Liên hệ', href: '#lienhe', color: 'hover:text-red-500' },
-        ].map((item, idx) => (
-          <motion.a
-            key={idx}
-            href={item.href}
-            whileHover={{ scale: 1.1 }}
-            className={`px-4 py-2 rounded-full bg-white dark:bg-gray-700 shadow-md transition-all duration-300 ${item.color} hover:font-bold`}
-          >
-            {item.label}
-          </motion.a>
-        ))}
-      </nav>
-
-      {/* Content chia 2 cột */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        {[
-          {
-            id: 'muctieu',
-            title: '🎯 Mục tiêu nghề nghiệp',
-            color: 'text-pink-500',
-            content: [
-              'Trở thành một chuyên viên QA chuyên nghiệp, có khả năng kiểm thử thủ công và tự động.',
-              'Đóng góp vào việc đảm bảo chất lượng phần mềm tốt nhất cho người dùng.',
-            ],
-          },
-          {
-            id: 'hocvan',
-            title: '🎓 Học vấn',
-            color: 'text-blue-500',
-            content: [
-              'Trường Cao Đẳng Công Nghệ Thủ Đức',
-              'Chuyên ngành: Kiểm thử phần mềm (QA)',
-              'Tốt nghiệp: 2024',
-            ],
-          },
-          {
-            id: 'kynang',
-            title: '💡 Kỹ năng',
-            color: 'text-green-600',
-            content: [
-              '✔ Kiểm thử thủ công (Manual Testing)',
-              '✔ Selenium / Cypress',
-              '✔ Viết test case, test plan',
-              '✔ Jira, Postman, SQL',
-              '✔ Có chứng chỉ về QA',
-            ],
-          },
-          {
-            id: 'duan',
-            title: '📁 Dự án cá nhân',
-            color: 'text-purple-600',
-            content: [
-              '• Hệ thống quản lý bug bằng Jira (dự án nhóm)',
-              '• Kiểm thử website thương mại điện tử',
-            ],
-          },
-          {
-            id: 'thanhtuu',
-            title: '🏆 Thành tựu / Chứng chỉ',
-            color: 'text-yellow-600',
-            content: [
-              '• Chứng chỉ QA tại FPT',
-              '• Tham gia khóa học Automation Testing',
-            ],
-          },
-          {
-            id: 'hoatdong',
-            title: '📚 Hoạt động / Câu lạc bộ',
-            color: 'text-indigo-600',
-            content: [
-              '• Thành viên CLB Tin học – TDC',
-              '• Tham gia các buổi workshop kiểm thử phần mềm',
-            ],
-          },
-        ].map((section, idx) => (
-          <motion.section
-            key={idx}
-            id={section.id}
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all hover:scale-[1.02] px-8 py-6 text-center"
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            custom={idx + 1}
-          >
-            <h3 className={`text-2xl font-semibold mb-3 ${section.color}`}>{section.title}</h3>
-            <ul className="text-left list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
-              {section.content.map((line, i) => (
-                <li key={i}>{line}</li>
-              ))}
-            </ul>
-          </motion.section>
-        ))}
-      </div>
-
-      {/* Socials */}
-      <motion.div
-        className="flex justify-center mt-10 gap-6 text-2xl text-gray-700 dark:text-gray-300"
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={10}
-      >
-        <a
-          href="https://github.com/"
-          target="_blank"
-          className="hover:text-black dark:hover:text-white hover:scale-110 transition"
-        >
-          <FaGithub />
-        </a>
-        <a
-          href="https://linkedin.com/"
-          target="_blank"
-          className="hover:text-blue-600 hover:scale-110 transition"
-        >
-          <FaLinkedin />
-        </a>
-        <a
-          href="mailto:email@example.com"
-          className="hover:text-red-500 hover:scale-110 transition"
-        >
-          <FaEnvelope />
-        </a>
-      </motion.div>
-
-      {/* Liên hệ */}
-      <motion.section
-        id="lienhe"
-        className="max-w-xl mx-auto mt-16 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md"
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={11}
-      >
-        <h2 className="text-2xl font-semibold text-center text-pink-500 mb-4">📬 Liên hệ</h2>
-
-        {/* Thông báo */}
-        {status === 'success' && (
-          <p className="text-green-600 font-medium text-center mb-4">
-            ✅ Gửi thành công! Mình sẽ phản hồi sớm nhất.
-          </p>
+    <div className={clsx("font-sans transition-colors duration-500", darkMode ? "bg-black text-white" : "bg-white text-black")}>
+      {/* Header Navbar */}
+      <header
+        className={clsx(
+          "flex justify-between items-center px-10 py-6 sticky top-0 z-50 shadow-md bg-opacity-80 backdrop-blur-md transition-colors duration-500",
+          darkMode ? "bg-black text-white" : "bg-white text-black"
         )}
-        {status === 'error' && (
-          <p className="text-red-500 font-medium text-center mb-4">
-            ❌ Đã có lỗi xảy ra, vui lòng thử lại.
-          </p>
-        )}
+      >
+        <nav className="flex gap-6 text-sm">
+          {["Home", "Projects", "About", "Contact"].map((item, i) => (
+            <motion.a
+              key={i}
+              href={`#${item.toLowerCase()}`}
+              whileHover={{ scale: 1.1 }}
+              className="hover:text-pink-400 transition"
+            >
+              {item}
+            </motion.a>
+          ))}
+        </nav>
+        <button
+          onClick={toggleTheme}
+          className="text-sm border px-4 py-1 rounded-md hover:bg-pink-500 hover:text-white"
+        >
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </button>
+      </header>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Họ và tên"
-            required
-            className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
-          <textarea
-            name="message"
-            placeholder="Nội dung"
-            rows={5}
-            required
-            className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
-          <button
-            type="submit"
-            className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full transition font-semibold"
+      {/* About Section */}
+      <section id="about" className="flex flex-col md:flex-row items-center justify-center gap-10 px-8 py-20">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="w-60 h-60 rounded-full border-4 border-pink-400 overflow-hidden shadow-xl"
+        >
+          <Image src={avatar} alt="Avatar" className="object-cover w-full h-full" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="max-w-lg space-y-4"
+        >
+          <p>Xin chào! Mình là Nguyễn Ngọc Quỳnh Như, đam mê công nghệ và kiểm thử phần mềm. Luôn sẵn sàng học hỏi và phát triển!</p>
+          <p className="italic text-pink-400">"Luôn nỗ lực để hoàn thiện và học hỏi mỗi ngày!"</p>
+          <a
+            href="/Nguyen-Ngoc-Quynh-Nhu-CV.pdf"
+            download
+            className="inline-block px-6 py-2 bg-white text-black rounded-md hover:bg-pink-500 hover:text-white transition"
           >
-            Gửi liên hệ
-          </button>
+            Download CV
+          </a>
+        </motion.div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="py-20 text-center">
+        <motion.h2
+          className="text-3xl font-semibold mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Skills
+        </motion.h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 px-10">
+          {skills.map((skill, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ scale: 1.05 }}
+              className="flex flex-col items-center"
+            >
+              <div className={`w-24 h-24 rounded-full border-8 flex items-center justify-center font-bold text-xl ${skill.color}`}>
+                98%
+              </div>
+              <h3 className="mt-4 font-semibold">{skill.name}</h3>
+              <p className="text-sm opacity-70">Lorem ipsum dolor sit amet.</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Projects */}
+      <section id="projects" className="py-20 px-6">
+        <h2 className="text-3xl font-semibold text-center mb-16">Dự án đã làm</h2>
+        <div className="grid gap-10 max-w-4xl mx-auto">
+          {projects.map((project, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: idx * 0.1 }}
+              className="p-6 rounded-lg border shadow-md hover:shadow-xl transition"
+            >
+              <h3 className="text-xl font-semibold text-pink-400">{project.name}</h3>
+              <p className="text-sm italic mb-1">{project.tech}</p>
+              <p className="mb-2">{project.description}</p>
+              <a href={project.link} className="text-blue-400 underline" target="_blank">Xem GitHub</a>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Timeline */}
+      <section className="py-20 px-6">
+        <h2 className="text-3xl font-semibold text-center mb-16">Education And Experience</h2>
+        <div className="relative max-w-4xl mx-auto">
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full border-l-2 border-gray-700"></div>
+          {timeline.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: item.position === "left" ? -100 : 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className={clsx(
+                "mb-12 w-full md:w-1/2 px-4",
+                item.position === "left" ? "md:ml-auto md:text-left" : "md:mr-auto md:text-right"
+              )}
+            >
+              <div className={clsx("px-6 py-4 rounded-lg shadow-lg", item.color)}>
+                <h3 className="font-bold">{item.year}</h3>
+                <p className="text-sm">Lorem ipsum dolor sit amet...</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="py-20 px-6 text-center">
+        <h2 className="text-3xl font-semibold mb-8">Liên hệ</h2>
+        <form className="max-w-md mx-auto space-y-4">
+          <input type="text" placeholder="Họ tên" className="w-full px-4 py-2 rounded bg-gray-800 text-white" />
+          <input type="email" placeholder="Email" className="w-full px-4 py-2 rounded bg-gray-800 text-white" />
+          <textarea placeholder="Nội dung" className="w-full px-4 py-2 rounded bg-gray-800 text-white" rows={4}></textarea>
+          <button type="submit" className="px-6 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition">Gửi</button>
         </form>
-      </motion.section>
-    </main>
+        <div className="flex justify-center gap-6 mt-10 text-xl">
+          <a href="https://facebook.com" target="_blank" className="hover:text-pink-400"><FaFacebook /></a>
+          <a href="https://linkedin.com" target="_blank" className="hover:text-pink-400"><FaLinkedin /></a>
+          <a href="https://github.com" target="_blank" className="hover:text-pink-400"><FaGithub /></a>
+        </div>
+      </section>
+    </div>
   );
 }
