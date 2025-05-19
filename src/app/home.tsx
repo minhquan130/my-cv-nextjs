@@ -12,7 +12,7 @@ import ParticlesBackground from "@/components/ParticlesBackground";
 
 export default function HomePage() {
   return (
-    <main className="relative bg-[#0d0d0d] text-white">
+    <main className="relative bg-[#0d0d0d] text-white scroll-smooth">
       <Head>
         <title>Nguyễn Ngọc Quỳnh Như - CV cá nhân</title>
         <meta name="description" content="CV cá nhân ngành QA - Nguyễn Ngọc Quỳnh Như" />
@@ -24,33 +24,33 @@ export default function HomePage() {
       {/* Nền particles */}
       <ParticlesBackground />
 
-      {/* Section Avatar + Thông tin ngắn */}
-      <section className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-10 px-6 pt-24 pb-10">
+      {/* Home / Avatar Section */}
+      <section id="home" className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-10 px-6 pt-32 pb-10 scroll-mt-28">
         <AvatarSection />
       </section>
 
-      {/* About Me + Contact Info */}
-      <section className="relative z-10 px-6 py-16 bg-[#0d0d0d]">
+      {/* About */}
+      <section id="about" className="relative z-10 px-6 py-16 scroll-mt-28">
         <AboutSection />
       </section>
 
-      {/* My Work Skills */}
-      <section className="relative z-10 px-6 py-16 bg-[#0d0d0d]">
+      {/* Skills */}
+      <section id="skills" className="relative z-10 px-6 py-16 scroll-mt-28">
         <SkillsSection />
       </section>
 
-      {/* My Services */}
-      <section className="relative z-10 px-6 py-16 bg-[#0d0d0d]">
+      {/* Services */}
+      <section id="services" className="relative z-10 px-6 py-16 scroll-mt-28">
         <ServicesSection />
       </section>
 
-      {/* Testimonials */}
-      <section className="relative z-10 px-6 py-16 bg-[#0d0d0d]">
+      {/* Portfolio / Testimonials */}
+      <section id="portfolio" className="relative z-10 px-6 py-16 scroll-mt-28">
         <TestimonialsSection />
       </section>
 
-      {/* Contact Section */}
-      <section className="relative z-10 px-6 py-16 bg-[#0d0d0d]">
+      {/* Contact */}
+      <section id="contact" className="relative z-10 px-6 py-16 scroll-mt-28">
         <ContactSection />
       </section>
 
